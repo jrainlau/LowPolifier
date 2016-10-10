@@ -1,5 +1,11 @@
 {
   'use strict'
+  const sourceLoadComplete = Symbol('sourceLoadComplete')
+  const setSource = Symbol('setSource')
+  const generate = Symbol('generate')
+  const getEdgePoint = Symbol('getEdgePoint')
+  const grayscaleFilterR = Symbol('grayscaleFilterR')
+  const convolutionFilterR = Symbol('convolutionFilterR')
 
   let image,
       source,
@@ -10,6 +16,7 @@
 
   let generateTime = 0
 
+  // fork from https://github.com/timbennett/delaunay
   let Delaunay = (() => {
     /**
      * Node
@@ -189,7 +196,7 @@
     return Delaunay
   })()
 
-  class LowPolifier {
+  class LowPoly {
     constructor (src, { EDGE_DETECT_VALUE, POINT_RATE, POINT_MAX_NUM, BLUR_SIZE, EDGE_SIZE, PIXEL_LIMIT }) {
       this.src = src
       this.EDGE_DETECT_VALUE = EDGE_DETECT_VALUE || 80
@@ -223,17 +230,17 @@
       context = canvas.getContext('2d')
 
       source = new Image()
-      this.setSource(this.src)
+      this[setSource](this.src)
       return new Promise((res, rej) => {
         source.addEventListener('load', () => {
-          self.sourceLoadComplete().then((data) => {
+          self[sourceLoadComplete]().then((data) => {
             res(data)
           })
         }, false)
       })
     }
 
-    sourceLoadComplete (e) {
+    [sourceLoadComplete] (e) {
       let self = this
       let width  = source.width
       let height = source.height
@@ -251,25 +258,25 @@
       console.log('Generate start...')
       return new Promise((res, rej) => {
         timeoutId = setTimeout(() => {
-          self.generate().then((data) => {
+          self[generate]().then((data) => {
             res(data)
           })
         }, 0)
       })
     }
 
-    setSource (src) {
+    [setSource] (src) {
       generating = true
       if (source.src !== src) {
         source.removeAttribute('width')
         source.removeAttribute('height')
         source.src = src
       } else {
-        this.sourceLoadComplete(null)
+        this[sourceLoadComplete](null)
       }
     }
 
-    generate () {
+    [generate] () {
       let width  = canvas.width = source.width
       let height = canvas.height = source.height
 
@@ -278,11 +285,11 @@
       let imageData = context.getImageData(0, 0, width, height)
       let colorData = context.getImageData(0, 0, width, height).data
 
-      this.grayscaleFilterR(imageData)
-      this.convolutionFilterR(this.blur, imageData, this.blur.length)
-      this.convolutionFilterR(this.edge, imageData)
+      this[grayscaleFilterR](imageData)
+      this[convolutionFilterR](this.blur, imageData, this.blur.length)
+      this[convolutionFilterR](this.edge, imageData)
 
-      let temp = this.getEdgePoint(imageData)
+      let temp = this[getEdgePoint](imageData)
       let detectionNum = temp.length
 
       let points = []
@@ -341,7 +348,7 @@
       })
     }
 
-    getEdgePoint (imageData) {
+    [getEdgePoint] (imageData) {
       let width  = imageData.width
       let height = imageData.height
       let data = imageData.data
@@ -378,7 +385,7 @@
       return points
     }
 
-    grayscaleFilterR (imageData) {
+    [grayscaleFilterR] (imageData) {
       let width  = imageData.width | 0
       let height = imageData.height | 0
       let data = imageData.data
@@ -403,7 +410,7 @@
       return imageData
     }
 
-    convolutionFilterR (matrix, imageData, divisor) {
+    [convolutionFilterR] (matrix, imageData, divisor) {
       matrix  = matrix.slice()
       divisor = divisor || 1
 
@@ -468,15 +475,15 @@
 
   if (typeof module === 'object' && typeof module.exports === 'object') {
     // CommonJS
-    module.exports = exports = LowPolifier
+    module.exports = exports = LowPoly
 
   } else if (typeof define === 'function' && define.amd) {
     // AMD support
-    define(() => LowPolifier)
+    define(() => LowPoly)
 
   } else if (typeof window === 'object') {
     // Normal way
-    window.LowPolifier = LowPolifier
+    window.LowPoly = LowPoly
   }
 
 }
