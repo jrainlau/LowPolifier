@@ -1,0 +1,24 @@
+{
+  "name": "lowpoly",
+  "version": "1.0.0",
+  "description": "Style an image with low-poly",
+  "main": "lowpoly.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrainlau/LowPolifier.git"
+  },
+  "keywords": [
+    "lowpoly\u001b[D\u001b[D\u001b[D\u001b[D-\u001b[C\u001b[-poly",
+    "lowpoly",
+    "es6"
+  ],
+  "author": "Jrain Lau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jrainlau/LowPolifier/issues"
+  },
+  "homepage": "https://github.com/jrainlau/LowPolifier#readme"
+}
