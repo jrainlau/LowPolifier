@@ -1,5 +1,11 @@
+/**
+ * Author: Jrain Lau
+ * E-mail: jrainlau@163.com
+ * Version: 0.1.0
+ */
 {
   'use strict'
+  
   const sourceLoadComplete = Symbol('sourceLoadComplete')
   const setSource = Symbol('setSource')
   const generate = Symbol('generate')
@@ -16,7 +22,10 @@
 
   let generateTime = 0
 
-  // fork from https://github.com/timbennett/delaunay
+  /**
+   * Delaunay
+   * fork from https://github.com/timbennett/delaunay
+   */
   let Delaunay = (() => {
     /**
      * Node
@@ -195,7 +204,16 @@
 
     return Delaunay
   })()
-
+  
+  /**
+   * LowPoly
+   *
+   * Put in an image and return a low-poly style one.
+   *
+   * @param    {String}  src     address of an original image
+   * @param    {Objext}  config  configaration
+   *
+   */
   class LowPoly {
     constructor (src, { EDGE_DETECT_VALUE, POINT_RATE, POINT_MAX_NUM, BLUR_SIZE, EDGE_SIZE, PIXEL_LIMIT }) {
       this.src = src
@@ -223,12 +241,19 @@
         return matrix
       })(this.EDGE_SIZE)
     }
-
+    
+    /**
+     * init
+     *
+     * translate an image into low-poly style
+     *
+     * returns    {Promise}  a promise contains the low-poly image base64 url
+     *
+     */
     init () {
       let self = this
       canvas = document.createElement('canvas')
       context = canvas.getContext('2d')
-
       source = new Image()
       this[setSource](this.src)
       return new Promise((res, rej) => {
@@ -417,9 +442,9 @@
       let divscalar = divisor ? 1 / divisor : 0
       let k, len
       if (divscalar !== 1) {
-          for (k = 0, len = matrix.length; k < matrix.length; k++) {
-              matrix[k] *= divscalar
-          }
+        for (k = 0, len = matrix.length; k < matrix.length; k++) {
+          matrix[k] *= divscalar
+        }
       }
 
       let data = imageData.data

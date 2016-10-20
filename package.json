@@ -1,6 +1,6 @@
 {
   "name": "lowpoly",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Style an image with low-poly",
   "main": "lowpoly.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/jrainlau/LowPolifier.git"
   },
   "keywords": [
-    "lowpoly\u001b[D\u001b[D\u001b[D\u001b[D-\u001b[C\u001b[-poly",
+    "low-poly",
     "lowpoly",
     "es6"
   ],
