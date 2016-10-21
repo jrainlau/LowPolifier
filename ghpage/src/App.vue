@@ -6,7 +6,9 @@
         <img src="./assets/logo.png" alt="">
       </h1>
       <div class="output">
-        <img :src='src' @click='upload' alt="Select a picture">
+        <img v-show='src' :src='src' alt="Select a picture" @click='upload'>
+        <button v-show='!src' class="uploader" @click='upload'>Select a picture</button>
+        <input type="file" capture="camera" accept="image/*" id="upload-btn" @change='getFile' hidden>
       </div>
     </div>
     <Counter type='ddv' order='5'>
@@ -27,10 +29,9 @@
     <Counter type='pl' order='1000'>
       <span class="counter-name">Pixel limit:</span>
     </Counter>
-    <input type="file" capture="camera" accept="image/*" id="upload-btn" @change='getFile' hidden>
     <button class="generate-btn" @click='styling'>
-      <i :class="[working ? '' : 'hide', 'fa fa-spinner']" aria-hidden="true"></i>
-      <span :class="[working ? 'hide' : '']">Generate</span>
+      <span v-show='working' class="spinner">―</span>
+      <span v-show='!working'>Generate</span>
     </button>
   </div>
 </template>
@@ -123,6 +124,17 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        .uploader {
+          width: 40%;
+          height: 20%;
+          background: none;
+          border: 1px solid #aaa;
+          outline: none;
+          &:active{
+            background: #333;
+            color: #fff;
+          }
+        }
         img {
           max-width: 100%;
           max-height: 100%;
@@ -146,11 +158,13 @@
         background: #333;
         color: #fff;
       }
-      .fa {
+      .spinner {
+        display: inline-block;
+        width: 1.2rem;
+        height: 1.2rem;
+        line-height: 1.2rem;
+        font-size: 1.2rem;
         animation: spin 1.2s infinite;
-      }
-      .hide {
-        display: none;
       }
     }
     @keyframes spin {

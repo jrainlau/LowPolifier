@@ -11,7 +11,7 @@ export default new Vuex.Store({
 			pmn: 5500,
 			bs: 2,
 			es: 8,
-			pl: 450000
+			pl: 200000
 		}
 	},
 	mutations: {

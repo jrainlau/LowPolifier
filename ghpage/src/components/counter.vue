@@ -2,9 +2,9 @@
   <div class="counter">
     <slot></slot>
     <span class="counter-content">
-      <button @click='increment'>+</button>
-      <input type="text" :value='innerNum' maxlength="6" readonly>
-      <button @click='decrement'>-</button>
+      <span class='btn' @click='increment'>+</span>
+      <span class='input'>{{ innerNum }}</span>
+      <span class='btn' @click='decrement'>-</span>
     </span>
   </div>
 </template>
@@ -51,23 +51,26 @@
     }
     .counter-content {
       font-size: 0;
-      button,
-      input {
+      .btn,
+      .input {
+        display: inline-block;
         font-size: 14px;
         text-align: center;
         outline: none;
       }
-      input {
+      .input {
         border: 1px solid #bbb;
         border-left: none;
         border-right: none;
         width: 5rem;
         vertical-align: top;
       }
-      button {
+      .btn {
+        padding: 0 1rem;
         border: 1px solid #bbb;
         background: none;
         vertical-align: top;
+        cursor: pointer;
         &:active{
           background: #333;
           color: #fff;
