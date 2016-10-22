@@ -2,13 +2,8 @@
 `lowpoly.js` is a JS liberary which can style an image with [Low Poly](https://en.wikipedia.org/wiki/Low_poly).
 
 ![Img](https://github.com/jrainlau/LowPolifier/raw/master/example/1.jpg)
-![Img](https://github.com/jrainlau/LowPolifier/raw/master/example/1.png)
 
 ![Img](https://github.com/jrainlau/LowPolifier/raw/master/example/2.jpg)
-![Img](https://github.com/jrainlau/LowPolifier/raw/master/example/2.png)
-
-![Img](https://github.com/jrainlau/LowPolifier/raw/master/example/3.jpg)
-![Img](https://github.com/jrainlau/LowPolifier/raw/master/example/3.png)
 
 ## Install
 ```
